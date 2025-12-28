@@ -1,4 +1,5 @@
-#include "libft.h"
+#include "push_swap.h"
+
 
 int is_space(char c)
 {

@@ -11,6 +11,8 @@ static void push(t_stack **from, t_stack **to)
 
     // remove node from 'from' stack 
     *from = node->next;
+     if (*from)
+        (*from)->prev = NULL;
 
     // add node to top of 'to' stack 
     node->next = *to;

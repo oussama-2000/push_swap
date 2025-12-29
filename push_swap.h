@@ -34,7 +34,7 @@ void sa(t_stack **a);
 void sb(t_stack **b);
 void sss(t_stack **a,t_stack **b);
 void pa(t_stack **b, t_stack **a);
-void pb(t_stack **b, t_stack **a);
+void pb(t_stack **a, t_stack **b);
 void ra(t_stack **a);
 void rb(t_stack **b);
 void rr(t_stack **a,t_stack **b);

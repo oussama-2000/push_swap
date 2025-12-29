@@ -16,7 +16,8 @@
 
 typedef struct s_stack
 {
-    int             value;
+    int value;
+    int rank;         
     struct s_stack  *next;
     struct s_stack   *prev;
 } t_stack;
@@ -40,6 +41,9 @@ void rr(t_stack **a,t_stack **b);
 void rra(t_stack **a);
 void rrb(t_stack **b);
 void rrr(t_stack **a,t_stack **b);
+void free_stack(t_stack **s);
+long ft_atoi(const char *str);
+int duplicated(t_stack *stack, int value);
 
 
 #endif

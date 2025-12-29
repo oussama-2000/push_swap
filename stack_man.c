@@ -8,6 +8,7 @@ t_stack *stack_new(int value)
     if (!node)
         return NULL;
     node->value = value;
+    node->rank = -1;
     node->next = NULL;
     node->prev = NULL;
     return node;
@@ -30,4 +31,28 @@ void stack_add_back(t_stack **stack, t_stack *new)
         tmp = tmp->next;
     tmp->next = new;
     new->prev = tmp;
+}
+void free_stack(t_stack **s)
+{
+    t_stack *tmp;
+    if(!s || !*s)
+        return;
+
+    while(*s)
+    {
+        tmp = (*s)->next;
+        free(*s);
+        *s = tmp;
+    }
+}
+
+int duplicated(t_stack *stack, int value)
+{
+    while (stack)
+    {
+        if (stack->value == value)
+            return 1;
+        stack = stack->next;
+    }
+    return 0;
 }

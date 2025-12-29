@@ -8,6 +8,8 @@ static void swap(t_stack **s)
 
     if (!s || !*s)
         return;
+    if(!(*s)->next)
+        return;
 
     first = *s;
     second = first->next;

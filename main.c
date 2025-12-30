@@ -52,7 +52,7 @@ t_stack *find_max_rank(t_stack *stack)
 
 t_stack *find_min_rank(t_stack *stack)
 {
-    t_stack *min= stack;
+    t_stack *min = stack;
     while (stack)
     {
         if (stack->rank < min->rank)
@@ -94,65 +94,154 @@ void sort_three(t_stack **stack)
     else if (big_index->next != NULL)
         rra(stack);
     if ((*stack)->rank > (*stack)->next->rank)
-        sa(stack); 
+        sa(stack);
 }
 
-
-void sort_five(t_stack **a,t_stack **b)
+void sort_five(t_stack **a, t_stack **b)
 {
-     t_stack *min;
+    t_stack *min;
 
-     int len;
+    int len;
 
     while ((len = stack_len(*a)) > 3)
     {
         min = find_min_rank(*a);
 
-        if(min->prev == NULL)
-            pb(a,b);
-        else if(min->next == NULL || min->next->next == NULL)
+        if (min->prev == NULL)
+            pb(a, b);
+        else if (min->next == NULL || min->next->next == NULL)
             rra(a);
         else
             ra(a);
     }
-    if(!is_sorted(*a))
+    if (!is_sorted(*a))
         sort_three(a);
     while (*b)
     {
-        pa(b,a);
+        pa(b, a);
     }
 }
-// void    sort(t_stack **a, t_stack **b)
-// {
-//     void;
-// }
-void radix_sort(t_stack **a, t_stack **b)
+// this function returns the position of next belongs to the current chunk
+int get_position(t_stack *a, int min, int max)
 {
-    int i;
-    int j;
-    int size;
-    int max_bits;
+    int pos;
 
-    size = stack_len(*a);
-    max_bits = 0;
-    while ((size - 1) >> max_bits)
-        max_bits++;
-
-    i = 0;
-    while (i < max_bits)
+    pos = 0;
+    while (a)
     {
-        j = 0;
-        while (j++ < size)
+        if (a->rank >= min && a->rank <= max)
+            return pos;
+        pos++;
+        a = a->next;
+    }
+    return -1;
+}
+// search about the node that hase the biger rank
+int get_max_pos(t_stack *b)
+{
+    int max;
+    int pos;
+    int i;
+
+    max = b->rank;
+    pos = 0;
+    i = 0;
+    while (b)
+    {
+        if (b->rank > max)
         {
-            if (((*a)->rank >> i) & 1)
-                ra(a);
-            else
-                pb(a, b);
+            max = b->rank;
+            pos = i;
         }
-        while (*b)
-            pa(b, a);
+        b = b->next;
         i++;
     }
+    return pos;
+}
+// move the big node to the top
+void bring_max_to_top(t_stack **b)
+{
+    int pos;
+    int len;
+
+    len = stack_len(*b);
+    pos = get_max_pos(*b);
+
+    if (pos <= len / 2)
+    {
+        while (pos-- > 0)
+            rb(b);
+    }
+    else
+    {
+        while (pos < len)
+        {
+            rrb(b);
+            pos++;
+        }
+    }
+}
+int is_max(t_stack *b)
+{
+    int max = b->rank;
+    while (b)
+    {
+        if (b->rank > max)
+            return 0;
+        b = b->next;
+    }
+    return 1;
+}
+
+void chunks_sort(t_stack **a, t_stack **b)
+{
+    int len;
+    int chunk_size;
+    int current_min;
+    int current_max;
+    int pushed;
+    int pos;
+    int len_a;
+
+    len = stack_len(*a);
+    if (len <= 100)
+        chunk_size = 20;
+    else
+        chunk_size = 50;
+    current_min = 0;
+    current_max = chunk_size - 1;
+    while (*a)
+    {
+        pushed = 0;
+        len_a = stack_len(*a);
+        while (*a && pushed < chunk_size)
+        {
+            if ((*a)->rank >= current_min && (*a)->rank <= current_max)
+            {
+                pb(a, b);
+                if ((*b)->rank < current_min + (chunk_size / 2))
+                    rb(b);
+                pushed++;
+                len_a--;
+            }
+            else
+            {
+                pos = get_position(*a, current_min, current_max);
+                if (pos <= len_a / 2)
+                    ra(a);
+                else
+                    rra(a);
+            }
+        }
+        current_min += chunk_size;
+        current_max += chunk_size;
+    }
+    while (*b)
+    {
+        bring_max_to_top(b);
+        pa(b, a);
+    }
+
 }
 
 int main(int ac, char **av)
@@ -171,12 +260,12 @@ int main(int ac, char **av)
             sa(&a);
         if (stack_len(a) == 3)
             sort_three(&a);
-        if(stack_len(a) <= 5)
+        if (stack_len(a) <= 5)
         {
-            sort_five(&a,&b);
+            sort_five(&a, &b);
         }
         else
-            radix_sort(&a,&b);
+            chunks_sort(&a, &b);
     }
     // printf("------a------\n");
     // print_stack(&a);
@@ -185,7 +274,6 @@ int main(int ac, char **av)
 
     free_stack(&a);
     free_stack(&b);
-
     free(a);
     free(b);
     return 0;

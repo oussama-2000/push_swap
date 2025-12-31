@@ -3,7 +3,7 @@
 
 int is_space(char c)
 {
-    return (c == 32 || (c >= 9 && c <= 13));
+    return (c == 32);
 }
 
 size_t ft_count_words(const char *s)

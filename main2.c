@@ -120,68 +120,7 @@ void sort_five(t_stack **a, t_stack **b)
         pa(b, a);
     }
 }
-// this function returns the position of next belongs to the current chunk
-// int get_position(t_stack *a, int min, int max)
-// {
-//     int pos;
 
-//     pos = 0;
-//     while (a)
-//     {
-//         if (a->rank >= min && a->rank <= max)
-//             return pos;
-//         pos++;
-//         a = a->next;
-//     }
-//     return -1;
-// }
-// search about the node that hase the biger rank
-int get_max_pos(t_stack *b)
-{
-    int max;
-    int pos;
-    int i;
-
-    max = b->rank;
-    pos = 0;
-    i = 0;
-    while (b)
-    {
-        if (b->rank > max)
-        {
-            max = b->rank;
-            pos = i;
-        }
-        b = b->next;
-        i++;
-    }
-    return pos;
-}
-// move the big node to the top
-void bring_max_to_top(t_stack **b)
-{
-    int pos;
-    int len;
-
-    len = stack_len(*b);
-    pos = get_max_pos(*b);
-
-    if (pos <= len / 2)
-    {
-        while (pos-- > 0)
-            rb(b);
-    }
-    else
-    {
-        while (pos < len)
-        {
-            rrb(b);
-            pos++;
-        }
-
-    }
-}
-//
 // Checks if any element in the chunk range still exists in stack A
 int has_chunk_member(t_stack *a, int min, int max)
 {
@@ -222,50 +161,80 @@ int get_last_pos(t_stack *a, int min, int max)
     }
     return (last_pos);
 }
+int get_position(t_stack *stack, t_stack *target)
+{
+    int pos;
 
-void chunks_sort(t_stack **a, t_stack **b)
+    pos = 0;
+    while (stack)
+    {
+        if (stack == target)
+            return pos;
+        pos++;
+        stack = stack->next;
+    }
+    return pos;
+}
+
+void sort_part_1(t_stack **a,t_stack **b)
 {
     int chunk_size;
-    int current_min = 0;
-    int len = stack_len(*a);
+    int current_min;
+    int current_max;
 
-    chunk_size = (len <= 100 ) ? 19 : 45;
-
+    if(stack_len(*a) <= 100)
+        chunk_size = 19;
+    else
+        chunk_size = 53;
+    current_min = 0;
     while (*a)
     {
-        int current_max = current_min + chunk_size - 1;
-
+        current_max = current_min + chunk_size - 1;
         while (has_chunk_member(*a, current_min, current_max))
         {
             int top_pos = get_first_pos(*a, current_min, current_max);
             int bot_pos = get_last_pos(*a, current_min, current_max);
-            int len_a = stack_len(*a);
-
-            if (top_pos <= (len_a - bot_pos))
+            if (top_pos <= (stack_len(*a) - bot_pos))
             {
                 while (top_pos-- > 0)
                     ra(a);
             }
             else
             {
-
-                while (bot_pos++ < len_a)
+                while (bot_pos++ < stack_len(*a))
                     rra(a);
             }
             pb(a, b);
             if ((*b)->rank < (current_min + (chunk_size / 2)))
                 rb(b);
         }
-        
         current_min += chunk_size;
     }
+}
+void sort_part_2(t_stack **a,t_stack **b)
+{
+    t_stack *max_index;
+    int pos;
 
     while (*b)
     {
-        bring_max_to_top(b);
+        max_index = find_max_rank(*b);
+        pos = get_position(*b, max_index);
+        while (*b != max_index)
+        {
+            if ((*b)->rank == max_index->rank - 1)
+                pa(b, a);
+            else if (pos <= stack_len(*b) / 2)
+                rb(b);
+            else
+                rrb(b);
+        }
         pa(b, a);
+        if (*a && (*a)->next && (*a)->rank > (*a)->next->rank)
+            sa(a);
     }
 }
+
 int main(int ac, char **av)
 {
     t_stack *a = NULL;
@@ -273,7 +242,6 @@ int main(int ac, char **av)
 
     if (ac < 2)
         return 0;
-
     parse_args(ac, av, &a);
     stack_ranking(&a);
     if (!is_sorted(a))
@@ -283,13 +251,13 @@ int main(int ac, char **av)
         if (stack_len(a) == 3)
             sort_three(&a);
         if (stack_len(a) <= 5)
-        {
             sort_five(&a, &b);
-        }
         else
-            chunks_sort(&a, &b);
+        {
+            sort_part_1(&a,&b);
+            sort_part_2(&a,&b);
+        }
     }
-
     free_stack(&a);
     free_stack(&b);
     free(a);

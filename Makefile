@@ -4,8 +4,8 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 SRCS = ft_split.c ft_strdup.c ft_strlen.c ft_substr.c \
-       parsing.c stack_man.c main2.c swap.c push.c rotate.c \
-	   reverse_rotate.c ft_atoi.c
+       parsing.c stack_man1.c stack_man2.c stack_man3.c main.c swap.c push.c rotate.c \
+	   reverse_rotate.c ft_atoi.c sort.c
 
 OBJS = $(SRCS:.c=.o)
 

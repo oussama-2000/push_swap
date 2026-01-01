@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/01 22:35:16 by marvin            #+#    #+#             */
+/*   Updated: 2026/01/01 22:35:16 by marvin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef INT_MAX
 # define INT_MAX 2147483647
 #endif
@@ -7,7 +19,6 @@
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
-
 
 
 #include <stdio.h>
@@ -44,6 +55,18 @@ void rrr(t_stack **a,t_stack **b);
 void free_stack(t_stack **s);
 long ft_atoi(const char *str);
 int duplicated(t_stack *stack, int value);
-
+int stack_len(t_stack *stack);
+int is_sorted(t_stack *stack);
+t_stack *find_max_rank(t_stack *stack);
+t_stack *find_min_rank(t_stack *stack);
+void stack_ranking(t_stack **stack);
+int get_position(t_stack *stack, t_stack *target);
+void sort_part_1(t_stack **a,t_stack **b);
+void sort_part_2(t_stack **a,t_stack **b);
+void sort_three(t_stack **stack);
+void sort_five(t_stack **a, t_stack **b);
+int chunk(t_stack *a, int min, int max);
+int get_last_pos(t_stack *a, int min, int max);
+int get_first_pos(t_stack *a, int min, int max);
 
 #endif

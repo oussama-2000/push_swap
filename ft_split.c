@@ -1,87 +1,93 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/01/01 21:55:24 by marvin            #+#    #+#             */
+/*   Updated: 2026/01/01 21:55:24 by marvin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
-
-int is_space(char c)
+size_t	ft_count_words(const char *s)
 {
-    return (c == 32);
+	size_t	i;
+	size_t	count;
+	int	in_word;
+
+	i = 0;
+	count = 0;
+	in_word = 0;
+	while (s[i])
+	{
+		if (!(s[i] == 32) && in_word == 0)
+		{
+			in_word = 1;
+			count++;
+		}
+		else if (s[i] == 32)
+			in_word = 0;
+		i++;
+	}
+	return (count);
 }
 
-size_t ft_count_words(const char *s)
+void	ft_free_all(char **arr, size_t n)
 {
-    size_t i;
-    size_t count;
-    int in_word;
-
-    i = 0;
-    count = 0;
-    in_word = 0;
-    while (s[i])
-    {
-        if (!is_space(s[i]) && in_word == 0)
-        {
-            in_word = 1;
-            count++;
-        }
-        else if (is_space(s[i]))
-            in_word = 0;
-        i++;
-    }
-    return (count);
+	while (n > 0)
+	{
+		n--;
+		free(arr[n]);
+	}
+	free(arr);
 }
 
-void ft_free_all(char **arr, size_t n)
+int	ft_alloc(char ***res, const char *s)
 {
-    while (n > 0)
-    {
-        n--;
-        free(arr[n]);
-    }
-    free(arr);
+	if (!s)
+		return (0);
+	*res = malloc((ft_count_words(s) + 1) * sizeof(char *));
+	if (!*res)
+		return (0);
+	return (1);
 }
 
-int ft_alloc(char ***res, const char *s)
+int	ft_sub(char **res, const char *s, size_t start, size_t len)
 {
-    if (!s)
-        return (0);
-    *res = malloc((ft_count_words(s) + 1) * sizeof(char *));
-    if (!*res)
-        return (0);
-    return (1);
+	*res = ft_substr(s, start, len);
+	if (!*res)
+		return (0);
+	return (1);
 }
 
-int ft_sub(char **res, const char *s, size_t start, size_t len)
+char	**ft_split(char const *s)
 {
-    *res = ft_substr(s, start, len);
-    if (!*res)
-        return (0);
-    return (1);
-}
+	char	**res;
+	size_t	i;
+	size_t	j;
+	size_t	start;
 
-char **ft_split(char const *s)
-{
-    char **res;
-    size_t i;
-    size_t j;
-    size_t start;
-
-    i = 0;
-    j = 0;
-    if (!ft_alloc(&res, s))
-        return (NULL);
-    while (s[i])
-    {
-        while (s[i] && is_space(s[i]))
-            i++;
-        if (s[i])
-        {
-            start = i;
-            while (s[i] && !is_space(s[i]))
-                i++;
-            if (!ft_sub(&res[j], s, start, i - start))
-                return (ft_free_all(res, j), NULL);
-            j++;
-        }
-    }
-    res[j] = NULL;
-    return (res);
+	i = 0;
+	j = 0;
+	if (!ft_alloc(&res, s))
+		return (NULL);
+	while (s[i])
+	{
+		while (s[i] && (s[i] == 32))
+			i++;
+		if (s[i])
+		{
+			start = i;
+			while (s[i] && !(s[i] == 32))
+				i++;
+			if (!ft_sub(&res[j], s, start, i - start))
+				return (ft_free_all(res, j), NULL);
+			j++;
+		}
+	}
+	res[j] = NULL;
+	return (res);
 }

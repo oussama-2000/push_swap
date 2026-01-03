@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: oamkhou <oamkhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/02 23:52:59 by marvin            #+#    #+#             */
-/*   Updated: 2026/01/02 23:52:59 by marvin           ###   ########.fr       */
+/*   Updated: 2026/01/03 13:20:41 by oamkhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_strcmp(const char *s1, const char *s2)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!s1 || !s2)
@@ -28,7 +28,7 @@ int	ft_strcmp(const char *s1, const char *s2)
 	return (1);
 }
 
-void	Error(t_stack **a, t_stack **b, char *line)
+void	error_2(t_stack **a, t_stack **b, char *line)
 {
 	write(2, "Error\n", 6);
 	free(line);
@@ -62,24 +62,27 @@ void	exec_instruction(char *line, t_stack **a, t_stack **b)
 	else if (ft_strcmp(line, "rrr\n"))
 		rrr(a, b, 0);
 	else
-		Error(a, b, line);
+		error_2(a, b, line);
 }
 
 void	read_instructions(t_stack **a, t_stack **b)
 {
 	char	*line;
 
-	while ((line = get_next_line(0)))
+	line = get_next_line(0);
+	while (line != NULL)
 	{
 		exec_instruction(line, a, b);
 		free(line);
+		line = get_next_line(0);
 	}
 	if (is_sorted(*a) && stack_len(*b) == 0)
 		write(1, "OK\n", 3);
 	else
 		write(1, "KO\n", 3);
 }
-int main(int ac, char **av)
+
+int	main(int ac, char **av)
 {
 	t_stack	*a;
 	t_stack	*b;
@@ -87,10 +90,10 @@ int main(int ac, char **av)
 	a = NULL;
 	b = NULL;
 	if (ac < 2)
-		return 0;
+		return (0);
 	parse_args(ac, av, &a);
 	read_instructions(&a, &b);
 	free_stack(&a);
 	free_stack(&b);
-	return 0;
+	return (0);
 }

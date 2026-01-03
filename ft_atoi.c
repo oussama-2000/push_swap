@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: oamkhou <oamkhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 21:52:15 by marvin            #+#    #+#             */
-/*   Updated: 2026/01/01 21:52:15 by marvin           ###   ########.fr       */
+/*   Updated: 2026/01/03 13:29:26 by oamkhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-long	ft_atoi(const char *str)
+long	ft_atoi(char *str)
 {
 	long	result;
 	int		sign;
@@ -32,5 +32,5 @@ long	ft_atoi(const char *str)
 		result = result * 10 + (str[i] - '0');
 		i++;
 	}
-	return result * sign;
+	return (result * sign);
 }

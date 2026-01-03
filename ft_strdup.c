@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: oamkhou <oamkhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 21:57:46 by marvin            #+#    #+#             */
-/*   Updated: 2026/01/01 21:57:46 by marvin           ###   ########.fr       */
+/*   Updated: 2026/01/03 13:21:34 by oamkhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"push_swap.h"
 
-char	*ft_strdup(const char *s)
+char	*ft_strdup(char *s)
 {
 	char	*str;
 	size_t	size;

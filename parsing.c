@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: oamkhou <oamkhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 22:32:53 by marvin            #+#    #+#             */
-/*   Updated: 2026/01/01 22:32:53 by marvin           ###   ########.fr       */
+/*   Updated: 2026/01/03 13:32:07 by oamkhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ int	is_number(char *str)
 	if (str[i] == '+' || str[i] == '-')
 		i++;
 	if (!str[i])
-		return 0;
+		return (0);
 	while (str[i])
 	{
 		if (str[i] < '0' || str[i] > '9')
-			return 0;
+			return (0);
 		i++;
 	}
-	return 1;
+	return (1);
 }
 
 void	free_split(char **arr)
@@ -36,7 +36,7 @@ void	free_split(char **arr)
 
 	i = 0;
 	if (!arr)
-		return;
+		return ;
 	while (arr[i])
 		free(arr[i++]);
 	free(arr);
@@ -66,9 +66,9 @@ void	check_if_num(char **args, t_stack **a, int j, long *num)
 
 void	parse_args(int ac, char **av, t_stack **a)
 {
-	int	i;
+	int		i;
 	char	**args;
-	int	j;
+	int		j;
 	long	num;
 	t_stack	*node;
 

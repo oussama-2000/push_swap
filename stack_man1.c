@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_man1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: oamkhou <oamkhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 22:48:17 by marvin            #+#    #+#             */
-/*   Updated: 2026/01/01 22:48:17 by marvin           ###   ########.fr       */
+/*   Updated: 2026/01/03 13:41:46 by oamkhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ t_stack	*stack_new(int value)
 
 	node = malloc(sizeof(t_stack));
 	if (!node)
-		return NULL;
+		return (NULL);
 	node->value = value;
 	node->rank = -1;
 	node->next = NULL;
 	node->prev = NULL;
-	return node;
+	return (node);
 }
 
 void	stack_add_back(t_stack **stack, t_stack *new)
@@ -31,11 +31,11 @@ void	stack_add_back(t_stack **stack, t_stack *new)
 	t_stack	*tmp;
 
 	if (!stack || !new)
-		return;
+		return ;
 	if (!*stack)
 	{
 		*stack = new;
-		return;
+		return ;
 	}
 	tmp = *stack;
 	while (tmp->next)
@@ -46,10 +46,11 @@ void	stack_add_back(t_stack **stack, t_stack *new)
 
 void	free_stack(t_stack **s)
 {
-	t_stack *tmp;
-	if(!s || !*s)
-		return;
-	while(*s)
+	t_stack	*tmp;
+
+	if (!s || !*s)
+		return ;
+	while (*s)
 	{
 		tmp = (*s)->next;
 		free(*s);
@@ -59,13 +60,13 @@ void	free_stack(t_stack **s)
 
 int	duplicated(t_stack *stack, int value)
 {
-	while(stack)
+	while (stack)
 	{
 		if (stack->value == value)
-			return 1;
+			return (1);
 		stack = stack->next;
 	}
-	return 0;
+	return (0);
 }
 
 int	stack_len(t_stack *stack)
@@ -78,5 +79,5 @@ int	stack_len(t_stack *stack)
 		len++;
 		stack = stack->next;
 	}
-	return len;
+	return (len);
 }

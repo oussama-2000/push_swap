@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stack_man2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: oamkhou <oamkhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/01 22:49:37 by marvin            #+#    #+#             */
-/*   Updated: 2026/01/01 22:49:37 by marvin           ###   ########.fr       */
+/*   Updated: 2026/01/03 13:43:03 by oamkhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,16 @@ int	is_sorted(t_stack *stack)
 	while (stack->next)
 	{
 		if (stack->value > stack->next->value)
-			return 0;
+			return (0);
 		stack = stack->next;
 	}
-	return 1;
+	return (1);
 }
 
 t_stack	*find_max_rank(t_stack *stack)
 {
 	t_stack	*max;
-	
+
 	max = stack;
 	while (stack)
 	{
@@ -39,8 +39,8 @@ t_stack	*find_max_rank(t_stack *stack)
 
 t_stack	*find_min_rank(t_stack *stack)
 {
-	t_stack *min;
-	
+	t_stack	*min;
+
 	min = stack;
 	while (stack)
 	{
@@ -55,7 +55,7 @@ void	stack_ranking(t_stack **stack)
 {
 	t_stack	*head;
 	t_stack	*curent;
-	int	rank;
+	int		rank;
 
 	head = *stack;
 	while (head)
@@ -81,9 +81,9 @@ int	get_position(t_stack *stack, t_stack *target)
 	while (stack)
 	{
 		if (stack == target)
-			return pos;
+			return (pos);
 		pos++;
 		stack = stack->next;
 	}
-	return pos;
+	return (pos);
 }

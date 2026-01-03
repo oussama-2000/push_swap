@@ -6,7 +6,7 @@
 /*   By: oamkhou <oamkhou@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/07 23:55:41 by oamkhou           #+#    #+#             */
-/*   Updated: 2025/12/09 18:08:41 by oamkhou          ###   ########.fr       */
+/*   Updated: 2026/01/03 13:30:28 by oamkhou          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,18 @@ void	update_buffer(char **buffer)
 
 	i = 0;
 	if (*buffer == NULL)
-		return;
+		return ;
 	while ((*buffer)[i] && (*buffer)[i] != '\n')
 		i++;
 	if (!(*buffer)[i])
 	{
 		free(*buffer);
 		*buffer = NULL;
-		return;
+		return ;
 	}
 	new_buffer = malloc(ft_strlen(*buffer) - i + 1);
 	if (!new_buffer)
-		return;
+		return ;
 	i++;
 	j = 0;
 	while ((*buffer)[i])

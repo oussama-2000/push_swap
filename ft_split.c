@@ -12,11 +12,11 @@
 
 #include "push_swap.h"
 
-size_t	ft_count_words(const char *s)
+size_t	ft_count_words(char *s)
 {
 	size_t	i;
 	size_t	count;
-	int	in_word;
+	int		in_word;
 
 	i = 0;
 	count = 0;
@@ -45,7 +45,7 @@ void	ft_free_all(char **arr, size_t n)
 	free(arr);
 }
 
-int	ft_alloc(char ***res, const char *s)
+int	ft_alloc(char ***res, char *s)
 {
 	if (!s)
 		return (0);
@@ -55,7 +55,7 @@ int	ft_alloc(char ***res, const char *s)
 	return (1);
 }
 
-int	ft_sub(char **res, const char *s, size_t start, size_t len)
+int	ft_sub(char **res, char *s, size_t start, size_t len)
 {
 	*res = ft_substr(s, start, len);
 	if (!*res)
@@ -63,7 +63,7 @@ int	ft_sub(char **res, const char *s, size_t start, size_t len)
 	return (1);
 }
 
-char	**ft_split(char const *s)
+char	**ft_split(char *s)
 {
 	char	**res;
 	size_t	i;

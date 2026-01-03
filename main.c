@@ -17,7 +17,7 @@ void	ft_sort(t_stack **a,t_stack **b)
 	if (!is_sorted(*a))
 	{
 		if (stack_len(*a) == 2)
-			sa(a);
+			sa(a,1);
 		if (stack_len(*a) == 3)
 			sort_three(a);
 		if (stack_len(*a) <= 5)
@@ -44,7 +44,5 @@ int	main(int ac, char **av)
 	ft_sort(&a,&b);
 	free_stack(&a);
 	free_stack(&b);
-	free(a);
-	free(b);
 	return 0;
 }

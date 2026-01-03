@@ -14,15 +14,15 @@
 
 void	sort_three(t_stack **stack)
 {
-	t_stack	*big_index;
+	t_stack	*big_rank;
 
-	big_index = find_max_rank(*stack);
-	if (big_index->prev == NULL)
-		ra(stack);
-	else if (big_index->next != NULL)
-		rra(stack);
+	big_rank = find_max_rank(*stack);
+	if (big_rank->prev == NULL)
+		ra(stack,1);
+	else if (big_rank->next != NULL)
+		rra(stack,1);
 	if ((*stack)->rank > (*stack)->next->rank)
-		sa(stack);
+		sa(stack,1);
 }
 
 void	sort_five(t_stack **a, t_stack **b)
@@ -34,17 +34,19 @@ void	sort_five(t_stack **a, t_stack **b)
 	{
 		min = find_min_rank(*a);
 		if (min->prev == NULL)
-			pb(a, b);
+			pb(a, b,1);
 		else if (min->next == NULL || min->next->next == NULL)
-			rra(a);
+			rra(a,1);
 		else
-			ra(a);
+			ra(a,1);
+		if(is_sorted(*a))
+			break;
 	}
 	if (!is_sorted(*a))
 		sort_three(a);
 	while (*b)
 	{
-		pa(b, a);
+		pa(b, a,1);
 	}
 }
 
@@ -55,11 +57,11 @@ void	get_node_to_push(t_stack **a, int min, int max)
 
 	top_pos = get_first_pos(*a, min, max);
 	bot_pos = get_last_pos(*a, min, max);
-	if (top_pos <= (stack_len(*a) - bot_pos))
+	if (top_pos < (stack_len(*a) - bot_pos))
 	{
 		while (top_pos > 0)
 		{
-			ra(a);
+			ra(a,1);
 			top_pos--;
 		}
 	}
@@ -67,7 +69,7 @@ void	get_node_to_push(t_stack **a, int min, int max)
 	{
 		while (bot_pos < stack_len(*a))
 		{
-			rra(a);
+			rra(a,1);
 			bot_pos++;
 		}
 	}
@@ -82,7 +84,7 @@ void	sort_part_1(t_stack **a, t_stack **b)
 	if (stack_len(*a) <= 100)
 		chunk_size = 19;
 	else
-		chunk_size = 48;
+		chunk_size = 55;//1 -> 1000
 	current_min = 0;
 	while (*a)
 	{
@@ -90,9 +92,9 @@ void	sort_part_1(t_stack **a, t_stack **b)
 		while (chunk(*a, current_min, current_max))
 		{
 			get_node_to_push(a, current_min, current_max);
-			pb(a, b);
+			pb(a, b,1);
 			if ((*b)->rank < (current_min + (chunk_size / 2)))
-				rb(b);
+				rb(b,1);
 		}
 		current_min += chunk_size;
 	}
@@ -110,14 +112,14 @@ void	sort_part_2(t_stack **a, t_stack **b)
 		while (*b != max_index)
 		{
 			if ((*b)->rank == max_index->rank - 1)
-				pa(b, a);
+				pa(b, a,1);
 			else if (pos <= stack_len(*b) / 2)
-				rb(b);
+				rb(b,1);
 			else
-				rrb(b);
+				rrb(b,1);
 		}
-		pa(b, a);
+		pa(b, a,1);
 		if (*a && (*a)->next && (*a)->rank > (*a)->next->rank)
-			sa(a);
+			sa(a,1);
 	}
 }

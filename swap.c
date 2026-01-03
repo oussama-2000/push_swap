@@ -36,21 +36,24 @@ void	swap(t_stack **s)
 	*s = second;
 }
 
-void	sa(t_stack **a)
+void	sa(t_stack **a,int print)
 {
 	swap(a);
-	write(1 ,"sa\n",3);
+	if(print)
+		write(1 ,"sa\n",3);
 }
 
-void	sb(t_stack **b)
+void	sb(t_stack **b,int print)
 {
 	swap(b);
-	write(1 ,"sb\n",3);
+	if(print)
+		write(1 ,"sb\n",3);
 }
 
-void	sss(t_stack **a,t_stack **b)
+void	sss(t_stack **a,t_stack **b,int print)
 {
 	swap(a);
 	swap(b);
-	write(1 ,"sss\n",4);
+	if(print)
+		write(1 ,"sss\n",4);
 }

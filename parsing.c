@@ -58,7 +58,7 @@ void	check_if_num(char **args, t_stack **a, int j, long *num)
 	if (!is_number(args[i]))
 		error(a, args);
 	*num = ft_atoi(args[i]);
-	if (*num < INT_MIN || *num > INT_MAX)
+	if (*num < -2147483648 || *num > 2147483647)
 		error(a, args);
 	if (duplicated(*a, (int)*num))
 		error(a, args);

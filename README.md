@@ -1,3 +1,5 @@
+<img src="https://raw.githubusercontent.com/ayogun/42-project-badges/main/covers/cover-push_swap-bonus.png" width="100%" />
+
 <i>This project has been created as part of the 42 curriculum by oamkhou </i>
 
 <h1>Description:</h1>
